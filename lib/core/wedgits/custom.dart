@@ -1,40 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:se7ty/core/utils/colors.dart';
+import 'package:flutter/services.dart';
 
-class tforwedg extends StatelessWidget {
-  const tforwedg({super.key, required this.label, this.validator});
-
-  final String label;
-final String? Function(String?)? validator;
+class CustomTextFormField extends StatelessWidget {
+  const CustomTextFormField({
+    super.key,
+    required this.controller,
+    this.hintText,
+    this.validator,
+    this.suffixIcon,
+    this.prefixIcon,
+    this.onTap,
+    this.keyboardType,
+    this.inputFormatters,
+    this.readOnly = false,
+    this.textAlign = TextAlign.start,
+    this.maxLines = 1,
+  });
+  final TextEditingController controller;
+  final String? hintText;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
+  final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
+  final Function()? onTap;
+  final bool readOnly;
+  final TextAlign textAlign;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: validator,      
+      controller: controller,
+      keyboardType: keyboardType,
+      maxLines: maxLines,
+      readOnly: readOnly,
+      textAlign: textAlign,
       decoration: InputDecoration(
-        labelText: label,
-        labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: appcolor.graycolor),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: appcolor.primarycolor),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: appcolor.redcolor),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: appcolor.redcolor),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        disabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: appcolor.darkcolor),
-          borderRadius: BorderRadius.circular(10),
-        ),
+        hintText: hintText,
+        suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
       ),
+      validator: validator,
+      inputFormatters: inputFormatters,
+      onTap: onTap,
     );
   }
 }

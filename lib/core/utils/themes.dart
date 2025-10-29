@@ -26,7 +26,7 @@ class AppTheme {
     ),
     dividerTheme: DividerThemeData(color: appcolor.bgcolor),
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: appcolor.graycolor,
+      fillColor: appcolor.accentColor,
       filled: true,
       hintStyle: TextStyles.styleSize14.copyWith(color: appcolor.graycolor),
       enabledBorder: OutlineInputBorder(
