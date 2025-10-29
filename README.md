@@ -8,21 +8,21 @@ A new Flutter project.
 
 ### 🌞 Light Mode
 
-|                                            Splash                                             |
-| :-------------------------------------------------------------------------------------------: |
-| ![splash](https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/splash.png) |
+|                                                   Splash                                                    |
+| :---------------------------------------------------------------------------------------------------------: |
+| <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/splash.png" width="220"/> |
 
-|                                       Onboarding 1                                        |                                       Onboarding 2                                        |                                       Onboarding 3                                        |
-| :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
-| ![onb1](https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/onb1.png) | ![onb2](https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/onb2.png) | ![onb3](https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/onb3.png) |
+|                                               Onboarding 1                                                |                                               Onboarding 2                                                |                                               Onboarding 3                                                |
+| :-------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: |
+| <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/onb1.png" width="180"/> | <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/onb2.png" width="180"/> | <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/onb3.png" width="180"/> |
 
-|                                             Welcome                                              |
-| :----------------------------------------------------------------------------------------------: |
-| ![welcome](https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/welcome.png)  |
+|                                                   Welcome                                                    |
+| :----------------------------------------------------------------------------------------------------------: |
+| <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/welcome.png" width="220"/> |
 
-|                                            Login (1)                                            |                                            Login (2)                                            |
-| :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
-| ![logdo](https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/logdo.png) | ![logpa](https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/logpa.png) |
+|                                                 Login (1)                                                  |                                                 Login (2)                                                  |
+| :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
+| <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/logdo.png" width="180"/> | <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/logpa.png" width="180"/> |
 
 ---
 
@@ -39,3 +39,4 @@ The screenshots above showcase the splash screen, onboarding flow, welcome page,
 
    ```bash
    git clone https://github.com/OsamaElsaadany/se7ty.git
+   ```

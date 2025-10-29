@@ -3,6 +3,8 @@ import 'package:se7ty/components/buttons/Mainbutton.dart';
 import 'package:se7ty/components/inputs/custom_password_field.dart';
 import 'package:se7ty/core/constants/assetsimages.dart';
 import 'package:se7ty/core/helper/app_rejex.dart';
+import 'package:se7ty/core/routes/navigator.dart';
+import 'package:se7ty/core/routes/routes.dart';
 import 'package:se7ty/core/utils/colors.dart';
 import 'package:se7ty/core/utils/text_Styles.dart';
 import 'package:se7ty/core/wedgits/custom.dart';
@@ -107,11 +109,11 @@ class _LoginState extends State<Login> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // pushWithReplacement(
-                          //   context,
-                          //  // Routes.signup,
-                          //   extra: widget.userType,
-                          // );
+                          pushWithReplacement(
+                            context,
+                            Routes.register,
+                            extra: widget.userType,
+                          );
                         },
                         child: Text(
                           'سجل الان',
