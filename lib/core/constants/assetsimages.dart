@@ -4,5 +4,5 @@ class images {
   static const String background = 'assets/images/welcome.png';
   static const String onb2Svg = 'assets/images/on2.svg';
   static const String onb3Svg = 'assets/images/on3.svg';
-  
+  static const String loadingJson = 'assets/images/loading.json';
 }

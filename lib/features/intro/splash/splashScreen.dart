@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:se7ty/core/constants/assetsimages.dart';
 import 'package:se7ty/core/routes/navigator.dart';
 import 'package:se7ty/core/routes/routes.dart';
@@ -26,12 +25,10 @@ class _SplashscreenState extends State<Splashscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appcolor.whitecolor,
-      body:Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(images.logo,width: 300, height: 300,  ),
-          ],
+          children: [Image.asset(images.logo, width: 300, height: 300)],
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:se7ty/components/buttons/Mainbutton.dart';
 import 'package:se7ty/components/inputs/custom_password_field.dart';
 import 'package:se7ty/core/constants/assetsimages.dart';
@@ -9,6 +10,7 @@ import 'package:se7ty/core/utils/colors.dart';
 import 'package:se7ty/core/utils/text_Styles.dart';
 import 'package:se7ty/core/wedgits/custom.dart';
 import 'package:se7ty/features/auth/models/User_type_enum.dart';
+import 'package:se7ty/features/auth/presentation/cubit/auth_cubit.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key, required this.userType});
@@ -29,6 +31,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<AuthCubit>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appcolor.whitecolor,
@@ -52,7 +55,7 @@ class _LoginState extends State<Login> {
                 const SizedBox(height: 30),
                 CustomTextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: emailController,
+                  controller: cubit.emailController,
                   hintText: 'Osama@example.com',
                   prefixIcon: Icon(Icons.email_rounded),
                   textAlign: TextAlign.end,
@@ -68,7 +71,7 @@ class _LoginState extends State<Login> {
                 ),
                 const SizedBox(height: 20.0),
                 PasswordTextFormField(
-                  controller: passwordController,
+                  controller: cubit.passwordController,
                   hintText: '********',
                   textAlign: TextAlign.left,
                   prefixIcon: const Icon(Icons.lock),
@@ -90,9 +93,9 @@ class _LoginState extends State<Login> {
                 const SizedBox(height: 20),
                 MainButton(
                   onPressed: () async {
-                    // if (cubit.formKey.currentState!.validate()) {
-                    //   cubit.login();
-                    // }
+                    if (cubit.formKey.currentState!.validate()) {
+                      // cubit.login();
+                    }
                   },
                   text: "تسجيل الدخول",
                 ),

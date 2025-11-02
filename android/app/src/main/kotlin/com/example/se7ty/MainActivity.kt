@@ -1,4 +1,4 @@
-package com.example.se7ty
+package com.ose7ty.se7ty
 
 import io.flutter.embedding.android.FlutterActivity
 

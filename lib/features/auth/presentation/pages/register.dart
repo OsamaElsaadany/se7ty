@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:se7ty/components/buttons/Mainbutton.dart';
 import 'package:se7ty/components/inputs/custom_password_field.dart';
 import 'package:se7ty/core/constants/assetsimages.dart';
@@ -8,7 +11,10 @@ import 'package:se7ty/core/routes/routes.dart';
 import 'package:se7ty/core/utils/colors.dart';
 import 'package:se7ty/core/utils/text_Styles.dart';
 import 'package:se7ty/core/wedgits/custom.dart';
+import 'package:se7ty/core/wedgits/dialogs.dart';
 import 'package:se7ty/features/auth/models/User_type_enum.dart';
+import 'package:se7ty/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:se7ty/features/auth/presentation/cubit/auth_state.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key, required this.userType});
@@ -24,27 +30,43 @@ class _RegisterState extends State<Register> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
   String handleUserType() {
     return widget.userType == UserTypeEnum.doctor ? 'دكتور' : 'مريض';
   }
 
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<AuthCubit>();
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appcolor.whitecolor,
         leading: const BackButton(color: appcolor.primarycolor),
       ),
-      body:SingleChildScrollView(
+      body: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthLoadingState) {
+            showLoadingDialog(context);
+          } else if (state is AuthSuccessState) {
+            pop(context);
+            log('Registered Successfully');
+            if (widget.userType == UserTypeEnum.doctor) {
+              //pushTo(context, Routes.doctorRegistration);
+            } else {
+              //pushWithReplacement(context, Routes.patientMain);
+            }
+          } else if (state is AuthFailureState) {
+            pop(context);
+            showMyDialog(context, state.errorMessage);
+          }
+        },
+        child: SingleChildScrollView(
           child: Form(
-            
+            key: cubit.formKey,
             child: Padding(
               padding: const EdgeInsets.only(right: 16, left: 16),
               child: Column(
                 children: [
-                 
                   Image.asset(images.logo, height: 250),
                   const SizedBox(height: 20),
                   Text(
@@ -55,7 +77,7 @@ class _RegisterState extends State<Register> {
                   ),
                   const SizedBox(height: 30),
                   CustomTextFormField(
-                    controller: nameController,
+                    controller: cubit.nameController,
                     keyboardType: TextInputType.text,
                     hintText: 'اسم المستخدم',
                     textAlign: TextAlign.left,
@@ -71,7 +93,7 @@ class _RegisterState extends State<Register> {
                   const SizedBox(height: 25.0),
                   CustomTextFormField(
                     keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
+                    controller: cubit.emailController,
                     hintText: 'Osama@example.com',
                     prefixIcon: Icon(Icons.email_rounded),
                     textAlign: TextAlign.end,
@@ -87,19 +109,21 @@ class _RegisterState extends State<Register> {
                   ),
                   const SizedBox(height: 25.0),
                   PasswordTextFormField(
-                    controller: passwordController,
+                    controller: cubit.passwordController,
                     hintText: '********',
-                    textAlign: TextAlign.left ,
+                    textAlign: TextAlign.left,
                     prefixIcon: const Icon(Icons.lock),
                     validator: (value) {
                       if (value!.isEmpty) return 'من فضلك ادخل كلمة السر';
                       return null;
                     },
                   ),
-                  const SizedBox(height: 20,),
-                   MainButton(
+                  const SizedBox(height: 20),
+                  MainButton(
                     onPressed: () async {
-                      
+                      if (cubit.formKey.currentState!.validate()) {
+                        await cubit.register(userType: widget.userType);
+                      }
                     },
                     text: "تسجيل حساب جديد",
                   ),
@@ -137,6 +161,7 @@ class _RegisterState extends State<Register> {
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 }
