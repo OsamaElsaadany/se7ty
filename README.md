@@ -26,9 +26,9 @@ A new Flutter project.
 | :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
 | <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/logdo.png" width="180"/> | <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/logpa.png" width="180"/> |
 
-|                                                Register (1)                                                |                                                Register (2)                                                |
-| :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
-| <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/regdo.png" width="180"/> | <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/regpa.png" width="180"/> |
+|                                                Register (1)                                                |                                                Register (2)                                                |                                               Doctor Register                                               |
+| :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
+| <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/regdo.png" width="180"/> | <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/regpa.png" width="180"/> | <img src="https://github.com/OsamaElsaadany/se7ty/blob/main/assets/images/outputs/docreg.png" width="180"/> |
 
 </div>
 
@@ -47,5 +47,3 @@ The screenshots above showcase the splash screen, onboarding flow, welcome page,
 
    ```bash
    git clone https://github.com/OsamaElsaadany/se7ty.git
-   ```
-*

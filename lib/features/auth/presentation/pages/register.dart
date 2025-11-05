@@ -51,9 +51,8 @@ class _RegisterState extends State<Register> {
             pop(context);
             log('Registered Successfully');
             if (widget.userType == UserTypeEnum.doctor) {
-              //pushTo(context, Routes.doctorRegistration);
+              pushTo(context, Routes.doctorRegistration);
             } else {
-              //pushWithReplacement(context, Routes.patientMain);
             }
           } else if (state is AuthFailureState) {
             pop(context);
@@ -122,7 +121,7 @@ class _RegisterState extends State<Register> {
                   MainButton(
                     onPressed: () async {
                       if (cubit.formKey.currentState!.validate()) {
-                        await cubit.register(userType: widget.userType);
+                        cubit.register(userType: widget.userType);
                       }
                     },
                     text: "تسجيل حساب جديد",

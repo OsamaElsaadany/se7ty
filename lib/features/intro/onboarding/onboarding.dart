@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:se7ty/components/buttons/Mainbutton.dart';
 import 'package:se7ty/core/routes/navigator.dart';
 import 'package:se7ty/core/routes/routes.dart';
+import 'package:se7ty/core/services/local/shared_pref.dart';
 import 'package:se7ty/core/utils/colors.dart';
 import 'package:se7ty/core/utils/text_Styles.dart';
 import 'package:se7ty/features/intro/onboarding/onboardingmodel.dart';
@@ -26,7 +27,10 @@ class _OnboardingState extends State<Onboarding> {
         actions: [
           if (currentindex != onboardinglist.length - 1)
             TextButton(
-              onPressed: () {pushWithReplacement(context, Routes.welcome);},
+              onPressed: () {
+                SharedPref.setOnboardingSeen();
+                pushWithReplacement(context, Routes.welcome);
+              },
               child: Text(
                 'تخطى',
                 style: TextStyles.styleSize18.copyWith(

@@ -10,8 +10,14 @@ class AppTheme {
     scaffoldBackgroundColor: const Color.from(alpha: 1, red: 1, green: 1, blue: 1),
     fontFamily: AppFonts.cairo,
     appBarTheme: AppBarTheme(
-      backgroundColor: appcolor.whitecolor,
+      backgroundColor: appcolor.primarycolor,
       surfaceTintColor: Colors.transparent,
+      titleTextStyle: TextStyle(
+        color: appcolor.whitecolor,
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        fontFamily: AppFonts.cairo,
+      ),
       centerTitle: true,
     ),
     colorScheme: ColorScheme.fromSeed(
