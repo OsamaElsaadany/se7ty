@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:se7ty/components/buttons/Mainbutton.dart';
-import 'package:se7ty/core/routes/navigator.dart';
+import 'package:se7ty/core/routes/naviagtion.dart';
 import 'package:se7ty/core/routes/routes.dart';
 import 'package:se7ty/core/services/local/shared_pref.dart';
 import 'package:se7ty/core/utils/colors.dart';

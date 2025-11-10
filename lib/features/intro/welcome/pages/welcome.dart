@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:se7ty/core/constants/assetsimages.dart';
-import 'package:se7ty/core/routes/navigator.dart';
+import 'package:se7ty/core/routes/naviagtion.dart';
 import 'package:se7ty/core/routes/routes.dart';
 import 'package:se7ty/core/utils/colors.dart';
 import 'package:se7ty/core/utils/text_Styles.dart';

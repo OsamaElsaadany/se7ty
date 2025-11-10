@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:se7ty/core/utils/text_Styles.dart';
 
 class extile extends StatelessWidget {
   const extile({super.key, required this.tit, required this.endtit});

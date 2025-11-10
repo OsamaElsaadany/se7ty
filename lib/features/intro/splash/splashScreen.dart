@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:se7ty/core/constants/assetsimages.dart';
-import 'package:se7ty/core/routes/navigator.dart';
+import 'package:se7ty/core/routes/naviagtion.dart';
 import 'package:se7ty/core/routes/routes.dart';
 import 'package:se7ty/core/services/local/shared_pref.dart';
 import 'package:se7ty/core/utils/colors.dart';
@@ -36,7 +36,7 @@ class _SplashscreenState extends State<Splashscreen> {
   
     Future.delayed(Duration(seconds: 6), () {
       //context.go('/welcome');
-      pushAndRemoveUntil(context, Routes.welcome);
+      goToBase(context, Routes.welcome);
     });
   }
 

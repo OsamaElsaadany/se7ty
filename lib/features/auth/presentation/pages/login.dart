@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:se7ty/components/buttons/Mainbutton.dart';
 import 'package:se7ty/components/inputs/custom_password_field.dart';
 import 'package:se7ty/core/constants/assetsimages.dart';
-import 'package:se7ty/core/helper/app_rejex.dart';
-import 'package:se7ty/core/routes/navigator.dart';
+import 'package:se7ty/core/functions/app_regex.dart';
+import 'package:se7ty/core/functions/dialogs.dart';
+import 'package:se7ty/core/routes/naviagtion.dart';
 import 'package:se7ty/core/routes/routes.dart';
 import 'package:se7ty/core/utils/colors.dart';
 import 'package:se7ty/core/utils/text_Styles.dart';
 import 'package:se7ty/core/wedgits/custom.dart';
 import 'package:se7ty/features/auth/models/User_type_enum.dart';
 import 'package:se7ty/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:se7ty/features/auth/presentation/cubit/auth_state.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key, required this.userType});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key, required this.userType});
   final UserTypeEnum userType;
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
-  var passwordController = TextEditingController();
-  var emailController = TextEditingController();
-  bool isVisible = true;
-
+class _LoginScreenState extends State<LoginScreen> {
   String handleUserType() {
-    return widget.userType == UserTypeEnum.patient ? "مريض" : "دكتور";
+    return widget.userType == UserTypeEnum.doctor ? 'دكتور' : 'مريض';
   }
 
   @override
@@ -35,100 +34,115 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appcolor.whitecolor,
-        leading: const BackButton(color: appcolor.whitecolor),
+        leading: const BackButton(color: appcolor.primarycolor),
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          //key: ,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 16, left: 16),
-            child: Column(
-              children: [
-                Image.asset(images.logo, height: 250),
-                const SizedBox(height: 20),
-                Text(
-                  'سجل دخول الان كـ "${handleUserType()}"',
-                  style: TextStyles.styleSize22.copyWith(
-                    color: appcolor.primarycolor,
-                  ),
-                ),
-                const SizedBox(height: 30),
-                CustomTextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  controller: cubit.emailController,
-                  hintText: 'Osama@example.com',
-                  prefixIcon: Icon(Icons.email_rounded),
-                  textAlign: TextAlign.end,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'من فضلك ادخل الايميل';
-                    } else if (!AppRegex.isEmailValid(value)) {
-                      return 'من فضلك ادخل الايميل صحيحا';
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                const SizedBox(height: 20.0),
-                PasswordTextFormField(
-                  controller: cubit.passwordController,
-                  hintText: '********',
-                  textAlign: TextAlign.left,
-                  prefixIcon: const Icon(Icons.lock),
-                  validator: (value) {
-                    if (value!.isEmpty) return 'من فضلك ادخل كلمة السر';
-                    return null;
-                  },
-                ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  padding: const EdgeInsetsDirectional.only(top: 10, start: 10),
-                  child: Text(
-                    'نسيت كلمة السر ؟',
-                    style: TextStyles.styleSize14.copyWith(
-                      color: appcolor.darkcolor,
+      body: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthLoadingState) {
+            showLoadingDialog(context);
+          } else if (state is AuthSuccessState) {
+            pop(context);
+            if (state.role == "doctor") {
+               //pushTo(context, Routes.doctorMain);
+            } else {
+              goToBase(context, Routes.patientMain);
+            }
+          } else if (state is AuthFailureState) {
+            pop(context);
+            showMyDialog(context, state.error);
+          }
+        },
+        child: SingleChildScrollView(
+          child: Form(
+            key: cubit.formKey,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 16, left: 16),
+              child: Column(
+                children: [
+                  const Gap(40),
+                  Image.asset(images.logo, height: 250),
+                  const SizedBox(height: 20),
+                  Text(
+                    'سجل دخول الان كـ "${handleUserType()}"',
+                    style: TextStyles.styleSize22.copyWith(
+                      color: appcolor.primarycolor,
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                MainButton(
-                  onPressed: () async {
-                    if (cubit.formKey.currentState!.validate()) {
-                      // cubit.login();
-                    }
-                  },
-                  text: "تسجيل الدخول",
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'ليس لدي حساب ؟',
-                        style: TextStyles.styleSize14.copyWith(
-                          color: appcolor.darkcolor,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          pushWithReplacement(
-                            context,
-                            Routes.register,
-                            extra: widget.userType,
-                          );
-                        },
-                        child: Text(
-                          'سجل الان',
-                          style: TextStyles.styleSize14.copyWith(
-                            color: appcolor.primarycolor,
+                  const SizedBox(height: 30),
+                  CustomTextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: cubit.emailController,
+                    hintText: 'Sayed@example.com',
+                    prefixIcon: Icon(Icons.email_rounded),
+                    textAlign: TextAlign.end,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'من فضلك ادخل الايميل';
+                      } else if (!AppRegex.isEmailValid(value)) {
+                        return 'من فضلك ادخل الايميل صحيحا';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 25.0),
+                  PasswordTextFormField(
+                    controller: cubit.passwordController,
+                    hintText: '********',
+                    prefixIcon: const Icon(Icons.lock),
+                    validator: (value) {
+                      if (value!.isEmpty) return 'من فضلك ادخل كلمة السر';
+                      return null;
+                    },
+                  ),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsetsDirectional.only(
+                      top: 10,
+                      start: 10,
+                    ),
+                    child: Text('نسيت كلمة السر ؟', style: TextStyles.styleSize14),
+                  ),
+                  const Gap(20),
+                  MainButton(
+                    onPressed: () async {
+                      if (cubit.formKey.currentState!.validate()) {
+                        cubit.login();
+                      }
+                    },
+                    text: "تسجيل الدخول",
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'ليس لدي حساب ؟',
+                          style: TextStyles.styleSize16.copyWith(
+                            color: appcolor.darkcolor,
                           ),
                         ),
-                      ),
-                    ],
+                        TextButton(
+                          onPressed: () {
+                            pushWithReplacement(
+                              context,
+                              Routes.register,
+                              extra: widget.userType,
+                            );
+                          },
+                          child: Text(
+                            'سجل الان',
+                            style: TextStyles.styleSize16.copyWith(
+                              color: appcolor.primarycolor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

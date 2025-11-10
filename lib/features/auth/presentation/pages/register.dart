@@ -6,7 +6,7 @@ import 'package:se7ty/components/buttons/Mainbutton.dart';
 import 'package:se7ty/components/inputs/custom_password_field.dart';
 import 'package:se7ty/core/constants/assetsimages.dart';
 import 'package:se7ty/core/helper/app_rejex.dart';
-import 'package:se7ty/core/routes/navigator.dart';
+import 'package:se7ty/core/routes/naviagtion.dart';
 import 'package:se7ty/core/routes/routes.dart';
 import 'package:se7ty/core/utils/colors.dart';
 import 'package:se7ty/core/utils/text_Styles.dart';
@@ -56,7 +56,7 @@ class _RegisterState extends State<Register> {
             }
           } else if (state is AuthFailureState) {
             pop(context);
-            showMyDialog(context, state.errorMessage);
+            showMyDialog(context, state.error);
           }
         },
         child: SingleChildScrollView(
@@ -121,7 +121,7 @@ class _RegisterState extends State<Register> {
                   MainButton(
                     onPressed: () async {
                       if (cubit.formKey.currentState!.validate()) {
-                        cubit.register(userType: widget.userType);
+                        cubit.register(type: widget.userType);
                       }
                     },
                     text: "تسجيل حساب جديد",

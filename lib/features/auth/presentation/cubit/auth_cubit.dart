@@ -27,65 +27,85 @@ class AuthCubit extends Cubit<AuthState> {
   final openHourController = TextEditingController();
   final closeHourController = TextEditingController();
 
-
-  register({required UserTypeEnum userType}) async {
-  emit(AuthLoadingState());
-  try {
-    final credential = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
-    User? user = credential.user;
-    await user?.updateDisplayName(nameController.text);
-    user?.updatePhotoURL(userType == UserTypeEnum.doctor ? "doctor" : "patient");
-
-    if (userType == UserTypeEnum.doctor) {
-      var doctor = DoctorModel(
-        uid: user?.uid,
-        name: nameController.text,
-        email: emailController.text,
-      );
-      await FirebaseFirestore.instance
-          .collection("doctor")
-          .doc(user?.uid)
-          .set(doctor.toJson());
-    } else {
-      var patient = PatientModel(
-        uid: user?.uid,
-        name: nameController.text,
-        email: emailController.text,
-      );
-      await FirebaseFirestore.instance
-          .collection("patient")
-          .doc(user?.uid)
-          .set(patient.toJson());
-    }
-
-    emit(AuthSuccessState());
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'weak-password') {
-      emit(AuthFailureState("كلمة المرور ضعيفة"));
-    } else if (e.code == 'email-already-in-use') {
-      emit(AuthFailureState("البريد الإلكتروني مستخدم بالفعل"));
-    } else {
-      emit(AuthFailureState("حدث خطأ ما، يرجى المحاولة مرة أخرى"));
-    }
-  } catch (e) {
-    emit(AuthFailureState("حدث خطأ ما، يرجى المحاولة مرة أخرى"));
-  }
-}
-
-
-
-updateDoctorData(File? pickedImage) async {
+  login() async {
     emit(AuthLoadingState());
     try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      emit(AuthSuccessState(role: credential.user?.photoURL));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        emit(AuthFailureState("لا يوجد مستخدم بهذا البريد الإلكتروني"));
+      } else if (e.code == 'wrong-password') {
+        emit(AuthFailureState("كلمة المرور غير صحيحة"));
+      } else {
+        emit(AuthFailureState("حدث خطأ ما، يرجى المحاولة مرة أخرى"));
+      }
+    } catch (e) {
+      emit(AuthFailureState("حدث خطأ ما، يرجى المحاولة مرة أخرى"));
+    }
+  }
+
+  register({required UserTypeEnum type}) async {
+    emit(AuthLoadingState());
+    try {
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text,
+          );
+      User? user = credential.user;
+      await user?.updateDisplayName(nameController.text);
+      user?.updatePhotoURL(type == UserTypeEnum.doctor ? "doctor" : "patient");
+
+      if (type == UserTypeEnum.doctor) {
+        var doctor = DoctorModel(
+          uid: user?.uid,
+          name: nameController.text,
+          email: emailController.text,
+        );
+        await FirebaseFirestore.instance
+            .collection("doctor")
+            .doc(user?.uid)
+            .set(doctor.toJson());
+      } else {
+        var patient = PatientModel(
+          uid: user?.uid,
+          name: nameController.text,
+          email: emailController.text,
+        );
+        await FirebaseFirestore.instance
+            .collection("patient")
+            .doc(user?.uid)
+            .set(patient.toJson());
+      }
+
+      emit(AuthSuccessState());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        emit(AuthFailureState("كلمة المرور ضعيفة"));
+      } else if (e.code == 'email-already-in-use') {
+        emit(AuthFailureState("البريد الإلكتروني مستخدم بالفعل"));
+      } else {
+        emit(AuthFailureState("حدث خطأ ما، يرجى المحاولة مرة أخرى"));
+      }
+    } catch (e) {
+      emit(AuthFailureState("حدث خطأ ما، يرجى المحاولة مرة أخرى"));
+    }
+  }
+
+  updateDoctorData(File? pickedImage) async {
+    emit(AuthLoadingState());
+    try {
+      //1) upload file to storage
       String? imageUrl = await uploadImageToCloudinary(pickedImage!);
       if (imageUrl == null) {
         emit(AuthFailureState("فشل في رفع الصورة، يرجى المحاولة مرة أخرى"));
         return;
       }
+      // update data in firestore
       var doctor = DoctorModel(
         uid: FirebaseAuth.instance.currentUser?.uid,
         bio: bioController.text,

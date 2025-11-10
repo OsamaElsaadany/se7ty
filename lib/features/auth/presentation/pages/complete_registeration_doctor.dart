@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:se7ty/components/buttons/Mainbutton.dart';
-import 'package:se7ty/core/routes/navigator.dart';
+import 'package:se7ty/core/routes/naviagtion.dart';
 import 'package:se7ty/core/utils/colors.dart';
 import 'package:se7ty/core/utils/text_Styles.dart';
 import 'package:se7ty/core/wedgits/custom.dart';
@@ -54,7 +54,7 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
             log('Doctor data updated successfully');
           } else if (state is AuthFailureState) {
             pop(context);
-            showMyDialog(context, state.errorMessage);
+            showMyDialog(context, state.error);
           }
         },
         child: SingleChildScrollView(
